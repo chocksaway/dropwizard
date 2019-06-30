@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery Ajax Get, Post, JSON Example</title>
+
+    <script>
+        $("#my_form").submit(function(event){
+            event.preventDefault(); //prevent default action
+            var post_url = $(this).attr("action"); //get form action url
+            var request_method = $(this).attr("method"); //get form GET/POST method
+            var form_data = $(this).serialize(); //Encode form elements for submission
+
+            $.ajax({
+                contentType: "application/json;charset=utf-8",
+                url : post_url,
+                type: request_method,
+                dataType : 'json',
+                data : form_data
+            }).done(function(response){ //
+                $("#server-results").html(response);
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+<form action="http://localhost:9000/person/save" method="post" id="my_form">
+    <label>Name</label>
+    <input type="text" name="name" />
+    <label>Email</label>
+    <input type="email" name="email" />
+    <label>Website</label>
+    <input type="url" name="website" />
+    <input type="submit" name="submit" value="Submit Form" />
+    <div id="server-results"><!-- For server results --></div>
+</form>
+
+
+</body>
+</html>
